@@ -1,0 +1,46 @@
+{
+  "title": "reference_accounts",
+  "type": "csv",
+  "columns": [
+    {
+      "name": "account_id",
+      "type": "uuid",
+      "required": true
+    },
+    {
+      "name": "customer_id",
+      "type": "uuid",
+      "required": true
+    },
+    {
+      "name": "account_type",
+      "type": "enum",
+      "values": [
+        "WALLET",
+        "CHECKING",
+        "CREDIT"
+      ],
+      "required": true
+    },
+    {
+      "name": "status",
+      "type": "enum",
+      "values": [
+        "ACTIVE",
+        "SUSPENDED",
+        "CLOSED"
+      ],
+      "required": true
+    },
+    {
+      "name": "base_currency",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "opened_at",
+      "type": "date-time",
+      "required": true
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-01-01T23:38:23Z",
+  "paths": {
+    "raw": "./data\\raw",
+    "reference": "./data\\reference",
+    "contracts": "./data\\contracts"
+  },
+  "schemas": {
+    "raw_transactions": "raw_transactions.schema.json",
+    "raw_disputes": "raw_disputes.schema.json",
+    "reference_customers": "reference_customers.schema.json",
+    "reference_accounts": "reference_accounts.schema.json",
+    "reference_merchants": "reference_merchants.schema.json",
+    "reference_fx_rates": "reference_fx_rates.schema.json"
+  },
+  "quality_rules": {
+    "raw_transactions": [
+      {
+        "rule": "amount is integer minor units",
+        "check": "amount is int and amount >= 0"
+      },
+      {
+        "rule": "currency length 3",
+        "check": "len(currency) == 3"
+      },
+      {
+        "rule": "correlation_id present",
+        "check": "present and UUID-shaped"
+      },
+      {
+        "rule": "idempotency_key present",
+        "check": "present and non-empty"
+      }
+    ],
+    "raw_disputes": [
+      {
+        "rule": "amount is integer minor units",
+        "check": "amount is int and amount >= 0"
+      },
+      {
+        "rule": "currency length 3",
+        "check": "len(currency) == 3"
+      },
+      {
+        "rule": "references transaction_id",
+        "check": "transaction_id appears in raw transactions"
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+version: 1.0
+datasets:
+  nifi_bulletins:
+    path: obs/raw/nifi_bulletins.jsonl
+    required:
+      - event_time
+      - node_id
+      - group_id
+      - component_id
+      - component_type
+      - bulletin_level
+      - category
+      - message
+  nifi_provenance:
+    path: obs/raw/nifi_provenance.jsonl
+    required:
+      - event_time
+      - node_id
+      - flowfile_uuid
+      - event_type
+      - component_id
+      - file_size
+      - attributes
+  flow_kpis:
+    path: obs/raw/flow_kpis.jsonl
+    required:
+      - window_start
+      - window_end
+      - flow_name
+      - metric_name
+      - metric_value
+      - dimensions
+  alerts:
+    path: obs/raw/alerts.jsonl
+    required:
+      - alert_time
+      - alert_type
+      - severity
+      - signal
+      - context

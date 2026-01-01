@@ -1,0 +1,236 @@
+{
+  "version": "1.0",
+  "raw_datasets": {
+    "transactions": {
+      "path": "raw/transactions.jsonl",
+      "format": "jsonl",
+      "json_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "transactions",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "transaction_id",
+          "correlation_id",
+          "event_time",
+          "customer_id",
+          "account_id",
+          "merchant_id",
+          "amount",
+          "currency",
+          "status",
+          "idempotency_key"
+        ],
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "correlation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "event_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "customer_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchant_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "CARD",
+              "UPI",
+              "ACH",
+              "WIRE"
+            ]
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "DEBIT",
+              "CREDIT"
+            ]
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "currency": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 3
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "AUTHORIZED",
+              "CAPTURED",
+              "SETTLED",
+              "DECLINED"
+            ]
+          },
+          "auth_code": {
+            "type": "string"
+          },
+          "card_last4": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{4}$"
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "ip_address": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "amount_base": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "base_currency": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 3,
+            "maxLength": 3
+          },
+          "fx_rate": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "merchant_risk_tier": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              null
+            ]
+          }
+        }
+      },
+      "data_quality_rules": [
+        {
+          "rule": "amount is integer minor units",
+          "check": "amount is int and amount >= 0"
+        },
+        {
+          "rule": "currency is ISO-4217-like length 3",
+          "check": "len(currency) == 3"
+        },
+        {
+          "rule": "idempotency_key stable per logical txn",
+          "check": "present and non-empty"
+        },
+        {
+          "rule": "correlation_id present for traceability",
+          "check": "present and UUID-shaped"
+        }
+      ]
+    },
+    "disputes": {
+      "path": "raw/disputes.jsonl",
+      "format": "jsonl",
+      "json_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "disputes",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "dispute_id",
+          "correlation_id",
+          "transaction_id",
+          "opened_at",
+          "reason_code",
+          "status",
+          "amount",
+          "currency"
+        ],
+        "properties": {
+          "dispute_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "correlation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "opened_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason_code": {
+            "type": "string",
+            "enum": [
+              "FRAUD",
+              "NOT_RECEIVED",
+              "DUPLICATE",
+              "OTHER"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "WON",
+              "LOST",
+              "CLOSED"
+            ]
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "currency": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 3
+          }
+        }
+      },
+      "data_quality_rules": [
+        {
+          "rule": "dispute references existing transaction_id",
+          "check": "transaction_id appears in transactions"
+        },
+        {
+          "rule": "opened_at after event_time (typical)",
+          "check": "opened_at >= event_time when joinable"
+        },
+        {
+          "rule": "amount is integer minor units",
+          "check": "amount is int and amount >= 0"
+        }
+      ]
+    }
+  }
+}

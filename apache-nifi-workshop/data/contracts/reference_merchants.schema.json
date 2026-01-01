@@ -1,0 +1,41 @@
+{
+  "title": "reference_merchants",
+  "type": "csv",
+  "columns": [
+    {
+      "name": "merchant_id",
+      "type": "uuid",
+      "required": true
+    },
+    {
+      "name": "merchant_name",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "mcc",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "country",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "risk_tier",
+      "type": "enum",
+      "values": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ],
+      "required": true
+    },
+    {
+      "name": "created_at",
+      "type": "date-time",
+      "required": true
+    }
+  ]
+}

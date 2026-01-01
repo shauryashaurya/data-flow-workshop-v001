@@ -1,0 +1,23 @@
+title: reference_fx_rates
+type: csv
+columns:
+  -
+    name: rate_date
+    type: date
+    required: true
+  -
+    name: base_ccy
+    type: string
+    required: true
+  -
+    name: quote_ccy
+    type: string
+    required: true
+  -
+    name: rate
+    type: decimal
+    required: true
+  -
+    name: provider
+    type: string
+    required: true

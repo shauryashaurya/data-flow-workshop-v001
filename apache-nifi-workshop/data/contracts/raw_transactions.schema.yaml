@@ -1,0 +1,97 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: raw_transactions
+type: object
+additionalProperties: true
+required:
+  - transaction_id
+  - correlation_id
+  - event_time
+  - customer_id
+  - account_id
+  - merchant_id
+  - amount
+  - currency
+  - status
+  - idempotency_key
+properties:
+  transaction_id:
+    type: string
+    format: uuid
+  correlation_id:
+    type: string
+    format: uuid
+  event_time:
+    type: string
+    format: date-time
+  customer_id:
+    type: string
+    format: uuid
+  account_id:
+    type: string
+    format: uuid
+  merchant_id:
+    type: string
+    format: uuid
+  channel:
+    type: string
+    enum:
+      - CARD
+      - UPI
+      - ACH
+      - WIRE
+  direction:
+    type: string
+    enum:
+      - DEBIT
+      - CREDIT
+  amount:
+    type: integer
+    minimum: 0
+  currency:
+    type: string
+    minLength: 3
+    maxLength: 3
+  status:
+    type: string
+    enum:
+      - AUTHORIZED
+      - CAPTURED
+      - SETTLED
+      - DECLINED
+  auth_code:
+    type: string
+  card_last4:
+    type:
+      - string
+      - null
+    pattern: "^[0-9]{4}$"
+  device_id:
+    type: string
+  ip_address:
+    type: string
+  idempotency_key:
+    type: string
+  amount_base:
+    type:
+      - integer
+      - null
+    minimum: 0
+  base_currency:
+    type:
+      - string
+      - null
+    minLength: 3
+    maxLength: 3
+  fx_rate:
+    type:
+      - number
+      - null
+  merchant_risk_tier:
+    type:
+      - string
+      - null
+    enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+      - null

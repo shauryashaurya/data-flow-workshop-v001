@@ -1,0 +1,39 @@
+title: reference_customers
+type: csv
+columns:
+  -
+    name: customer_id
+    type: uuid
+    required: true
+  -
+    name: full_name
+    type: string
+    required: true
+  -
+    name: email
+    type: string
+    required: true
+  -
+    name: phone_e164
+    type: string
+    required: true
+  -
+    name: dob
+    type: date
+    required: true
+  -
+    name: kyc_level
+    type: enum
+    values:
+      - BASIC
+      - STANDARD
+      - ENHANCED
+    required: true
+  -
+    name: country
+    type: string
+    required: true
+  -
+    name: created_at
+    type: date-time
+    required: true

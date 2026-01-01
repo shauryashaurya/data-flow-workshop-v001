@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "raw_disputes",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "dispute_id",
+    "correlation_id",
+    "transaction_id",
+    "opened_at",
+    "reason_code",
+    "status",
+    "amount",
+    "currency"
+  ],
+  "properties": {
+    "dispute_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "correlation_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "transaction_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "opened_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reason_code": {
+      "type": "string",
+      "enum": [
+        "FRAUD",
+        "NOT_RECEIVED",
+        "DUPLICATE",
+        "OTHER"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "OPEN",
+        "WON",
+        "LOST",
+        "CLOSED"
+      ]
+    },
+    "amount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    }
+  }
+}
